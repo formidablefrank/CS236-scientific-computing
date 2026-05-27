@@ -1,0 +1,691 @@
+\section{Interpolation}
+\subsection{Problem 7.5}
+\subsubsection*{$(a)$ Determine the polynomial interpolant using monomial basis to the data below.}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c | cccc}
+		$t$ & 1 & 2 & 3 & 4 \\\hline
+		$y$ & 11 & 29 & 65 & 125 \\
+	\end{tabular}
+\end{table}
+
+\textbf{Solution.} There is a unique polynomial
+\begin{equation*}
+p_3(t) = x_0 + x_1t + x_2t^2 + x_3t^3
+\end{equation*}
+that interpolates the given four points. Using the monomial basis, we need to solve $x_i$s such that
+\begin{align*}
+x_1 + x_2 + x_3 + x_4 &= 11 \\
+x_1 + 2x_2 + 4x_3 + 8x_4 &= 29 \\
+x_1 + 3x_2 + 9x_3 + 27x_3 &= 65 \\
+x_1 + 4x_2 + 16x_3 + 64x_4 &= 125 \\
+\end{align*}
+
+This system of equations will lead to the matrix form
+\begin{align*}
+\begin{bmatrix}
+	1 & 1 & 1 & 1 \\
+	1 & 2 & 4 & 8 \\
+	1 & 3 & 9 & 27 \\
+	1 & 4 & 16 & 64 \\
+\end{bmatrix}
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+	11 \\
+	29 \\
+	65 \\
+	125 \\
+\end{bmatrix}\\
+\mathbf{Ax} &= \mathbf{y}
+\end{align*}
+
+Where $\mathbf{A}$ is a Vandermonde matrix. This guarantees that the system will have a solution if different values of $t$ are used. One can obtain the solution using Gauss-Jordan reduction method. Perform elementary row operations on the augmented matrix $\left[\mathbf{A}|\mathbf{y}\right]$ until $\mathbf{A}$ becomes $\mathbf{I}$. Solving the system, we have
+
+\newcommand\arrows[3]{
+	\begin{matrix}[c]
+		\ifx\relax#1\relax\else \xrightarrow{#1}\fi\\
+		\ifx\relax#2\relax\else \xrightarrow{#2}\fi\\
+		\ifx\relax#3\relax\else \xrightarrow{#3}\fi
+	\end{matrix}
+}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\begin{equation*}
+\begin{bmatrix}[cccc|c]
+	1 & 1 & 1 & 1 & 11 \\
+	1 & 2 & 4 & 8 & 29 \\
+	1 & 3 & 9 & 27 & 65 \\
+	1 & 4 & 16 & 64 & 125 \\
+\end{bmatrix}
+\begin{matrix}[c] 
+	\xrightarrow{R_2-R_1} \\
+	\xrightarrow{R_3-R_1} \\
+	\xrightarrow{R_4-R_1} \\
+\end{matrix}
+\begin{bmatrix}[cccc|c]
+	1 & 1 & 1 & 1 & 11 \\
+	0 & 1 & 3 & 7 & 18 \\
+	0 & 2 & 8 & 26 & 54 \\
+	0 & 3 & 15 & 63 & 114 \\
+\end{bmatrix}
+\begin{matrix}[c] 
+	~ \\
+	\xrightarrow{R_3-2R_2} \\
+	\xrightarrow{R_4-3R_2} \\
+\end{matrix}
+\end{equation*}
+
+
+\begin{equation*}
+\begin{bmatrix}[cccc|c]
+	1 & 1 & 1 & 1 & 11 \\
+	0 & 1 & 3 & 7 & 18 \\
+	0 & 0 & 2 & 12 & 18 \\
+	0 & 0 & 6 & 42 & 60 \\
+\end{bmatrix}
+\begin{matrix}[c]
+	~ \\
+	\xrightarrow{\frac{1}{2} R_3} \\
+	~ \\
+\end{matrix}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 1 & 1 & 11 \\
+0 & 1 & 3 & 7 & 18 \\
+0 & 0 & 1 & 6 & 9 \\
+0 & 0 & 6 & 42 & 60 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{R_4-6R_3} \\
+~ \\
+\end{matrix}
+\end{equation*}
+
+\begin{equation*}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 1 & 1 & 11 \\
+0 & 1 & 3 & 7 & 18 \\
+0 & 0 & 1 & 6 & 9 \\
+0 & 0 & 0 & 6 & 6 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{\frac{1}{6} R_4} \\
+~ \\
+\end{matrix}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 1 & 1 & 11 \\
+0 & 1 & 3 & 7 & 18 \\
+0 & 0 & 1 & 6 & 9 \\
+0 & 0 & 0 & 1 & 1 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{R_3-6R_4} \\
+~ \\
+\end{matrix}
+\end{equation*}
+
+\begin{equation*}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 1 & 1 & 11 \\
+0 & 1 & 3 & 7 & 18 \\
+0 & 0 & 1 & 0 & 3 \\
+0 & 0 & 0 & 1 & 1 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{R_2-7R_4} \\
+\xrightarrow{R_1-R_4} \\
+\end{matrix}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 1 & 0 & 10 \\
+0 & 1 & 3 & 0 & 11 \\
+0 & 0 & 1 & 0 & 3 \\
+0 & 0 & 0 & 1 & 1 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{R_1-R_3} \\
+\xrightarrow{R_2-3R_3} \\
+\end{matrix}
+\end{equation*}
+
+\begin{equation*}
+\begin{bmatrix}[cccc|c]
+1 & 1 & 0 & 0 & 7 \\
+0 & 1 & 0 & 0 & 2 \\
+0 & 0 & 1 & 0 & 3 \\
+0 & 0 & 0 & 1 & 1 \\
+\end{bmatrix}
+\begin{matrix}[c]
+~ \\
+\xrightarrow{R_1-R_2} \\
+~ \\
+\end{matrix}
+\begin{bmatrix}[cccc|c]
+1 & 0 & 0 & 0 & 5 \\
+0 & 1 & 0 & 0 & 2 \\
+0 & 0 & 1 & 0 & 3 \\
+0 & 0 & 0 & 1 & 1 \\
+\end{bmatrix}
+\end{equation*}
+
+Therefore, $\mathbf{x} = \left[5\:2\:3\:1\right]^T$ and the interpolating polynomial is
+
+\begin{equation}\label{polyinter}
+\boxed{p(t) = 5+2t+3t^2+t^3}
+\end{equation}
+
+\subsubsection*{$(b)$ Determine the Lagrange polynomial interpolant to the same data and show that the resulting polynomial is equivalent to that obtained in part $(a)$.}
+
+The Lagrange form for the polynomial of degree three interpolating four points is
+
+\begin{align*}
+p(t) &= y_1\frac{(t-t_2)(t-t_3)(t-t_4)}{(t_1-t_2)(t_1-t_3)(t_1-t_4)} + y_2\frac{(t-t_1)(t-t_2)(t-t_4)}{(t_2-t_1)(t_2-t_3)(t_2-t_4)} \\
+&+ y_3\frac{(t-t_1)(t-t_2)(t-t_3)}{(t_3-t_1)(t_3-t_2)(t_3-t_4)} + y_4\frac{(t-t_1)(t-t_2)(t-t_3)}{(t_4-t_1)(t_4-t_2)(t_4-t_3)}
+\end{align*}
+
+For the data points given, the equation above becomes
+\begin{align*}
+p(t) &= 11\frac{(t-2)(t-3)(t-4)}{(1-2)(1-3)(1-4)} + 29\frac{(t-1)(t-2)(t-4)}{(2-1)(2-3)(2-4)} \\
+&+ 65\frac{(t-1)(t-2)(t-3)}{(3-1)(3-2)(3-4)} + 125\frac{(t-1)(t-2)(t-3)}{(4-1)(4-2)(4-3)} \\
+p(t) &= \frac{11}{(-1)(-2)(-3)}\left(t^3-9t^2+26t-24\right) + \frac{29}{(1)(-1)(-2)}\left(t^3-8t^2+19t-12\right) \\
+&+ \frac{65}{(2)(1)(-1)}\left(t^3-7t^2+14t-8\right) + \frac{125}{(3)(2)(1)}\left(t^3-6t^2+11t-6\right) \\p(t) &= \frac{-11}{6}\left(t^3-9t^2+26t-24\right) + \frac{29}{2}\left(t^3-8t^2+19t-12\right) \\
+&+ \frac{-65}{2}\left(t^3-7t^2+14t-8\right) + \frac{125}{6}\left(t^3-6t^2+11t-6\right) \\
+p(t) &= \left(\frac{-11}{6}+\frac{29}{2}-\frac{65}{2}+\frac{125}{6}\right)t^3 + \left(-9\cdot\frac{-11}{6}+-8\cdot\frac{29}{2}+-7\cdot\frac{-65}{2}+-6\cdot\frac{125}{6}\right)t^2 \\
+&+ \left(26\cdot\frac{-11}{6}+19\cdot\frac{29}{2}+14\cdot\frac{-65}{2}+11\cdot\frac{125}{6}\right)t\\&+\left(-24\cdot\frac{-11}{6}+-12\cdot\frac{29}{2}+-8\cdot\frac{-65}{2}+-6\cdot\frac{125}{6}\right)
+\end{align*}
+The Lagrange interpolating polynomial for the given data is
+\begin{equation}\label{polyinter2}
+\boxed{p(t) = 5+2t+3t^2+t^3}
+\end{equation}
+Note that this is also equivalent to the interpolant given in equation (\ref{polyinter}).
+
+\subsubsection*{$(c)$ Compute the Newton polynomial interpolant to the same data using each of the three methods given in the text (triangular matrix, incremental interpolation and divided differences) and show that each produces the same result as the previous two methods.}
+\textbf{Solution.}\\
+$(c.1)$ \textbf{Triangular Matrix}. With the Newton basis, we have the lower triangular linear system for interpolating four points:
+
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+1 & (t_2-t_1) & 0 & 0 \\
+1 & (t_3-t_1) & (t_3-t_1)(t_3-t_2) & 0 \\
+1 & (t_4-t_1) & (t_4-t_1)(t_4-t_2) & (t_4-t_1)(t_4-t_2)(t_4-t_3) \\
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+x_4 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+y_4 \\
+\end{bmatrix}
+\end{align*}
+
+For the data points given, the system becomes
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+1 & (2-1) & 0 & 0 \\
+1 & (3-1) & (3-1)(3-2) & 0 \\
+1 & (4-1) & (4-1)(4-2) & (4-1)(4-2)(4-3) \\
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+x_4 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+11 \\
+29 \\
+65 \\
+125 \\
+\end{bmatrix}\\
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+1 & 1 & 0 & 0 \\
+1 & 2 & 2 & 0 \\
+1 & 3 & 6 & 6 \\
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+x_4 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+11 \\
+29 \\
+65 \\
+125 \\
+\end{bmatrix}\\
+\mathbf{Ax} &= \mathbf{y}
+\end{align*}
+
+Since $\mathbf{A}$ is lower triangular, we can do forward substitution.
+
+\begin{align*}
+&x_1 = 11\\
+&x_1 + x_2 = 29 && 11 + x_2 = 29 &&&x_2 = 18\\
+&x_1 + 2x_2 + 2x_3 = 65 && 2x_3 = 18 &&&x_3 = 9\\ 
+&x_1 + 3x_2 + 6x_3 + 6x_4 = 125 && 6x_4 = 6 &&&x_4=1\\
+\end{align*}
+
+The Newton interpolating polynomial is
+\begin{align*}
+p(t) &= x_1 + x_2(t-t_1) + x_3(t-t_1)(t-t_2) + x_4(t-t_1)(t-t_2)(t-t_3)\\
+p(t) &= 11 + 18(t-1) + 9(t-1)(t-2) + (t-1)(t-2)(t-3)\\
+p(t) &= 11 + 18t - 18 + 9t^2 - 27t + 18 + t^3 - 6t^2 + 11t - 6\\
+\end{align*}
+\begin{equation}\label{polyinter3}\boxed{
+p(t) = 5 + 2t + 3t^2 + t^3
+}\end{equation}
+Note that this is also equivalent to the interpolant given in equations (\ref{polyinter}) and (\ref{polyinter2}).
+\\
+\\
+$(c.2)$ \textbf{Incremental Interpolation.}
+We begin with the first data point, $(t_1, y_1) = (1, 11)$ which is interpolated by the constant polynomial
+\begin{equation*}
+p_1(t) = y_1 = 11
+\end{equation*}
+Incorporating the second data point, $(t_2, y_2) = (2, 29)$, we modify the previous polynomial so that it interpolates the new data point as well:
+\begin{align*}
+p_2(t) &= p_1(t) + \frac{y_2-p_1(t_2)}{t_2-t_1}\left(t-t_1\right) \\
+p_2(t) &= 11 + \frac{29-11}{2-1}\left(t-1\right)\\
+p_2(t) &= 11 + 18(t-1)
+\end{align*}
+Include the third data point, $(t_3, y_3) = (3, 65)$ we have
+\begin{align*}
+p_3(t) &= p_2(t) + \frac{y_3-p_2(t_3)}{(t_3-t_1)(t_3-t_2)}\left(
+t-t_1)(t-t_2\right)\\
+p_3(t) &= 11 + 18(t-1) + \frac{65-47}{(3-1)(3-2)}\left(
+t-1)(t-2\right)\\
+p_3(t) &= 11 + 18t - 18 + \frac{18}{2}\left(t-1)(t-2\right)\\
+p_3(t) &= 18t - 7 + 9t^2 - 27t + 18\\
+p_3(t) &= 9t^2 - 9t + 11
+\end{align*}
+Lastly, include the fourth data point $(t_4, y_4) = (4, 125)$ we have
+\begin{align*}
+p_4(t) &= p_3(t) + \frac{y_4-p_3(t_4)}{(t_4-t_1)(t_4-t_2)(t_4-t_3)}\left(t-t_1)(t-t_2)(t-t_3\right) \\
+p_4(t) &= 9t^2 - 9t + 11 + \frac{125 - (9\cdot4^2 + 9\cdot4 - 11)}{(4-1)(4-2)(4-3)} \left(t-1)(t-2)(t-3\right) \\
+p_4(t) &= 9t^2 - 9t + 11 + \frac{6}{6} \left(t^3-6t^2+11t-6\right) \\
+p_4(t) &= 9t^2 - 9t + 11 + t^3 - 6t^2 + 11t - 6
+\end{align*}
+\begin{equation}\boxed{
+	p(t) = 5 + 2t + 3t^2 + t^3
+}\end{equation}
+Note that this is also equivalent to the interpolant given in equations (\ref{polyinter}), (\ref{polyinter2}) and (\ref{polyinter3}).
+\\
+\\
+$(c.3)$ \textbf{Newton Divided Differences.} The divided differences are defined using the recursive formula 
+\begin{align*}
+f\left[t_1, t_2, \ldots, t_k\right] &= \frac{f\left[t_2, t_3, \ldots, t_k\right] - f\left[t_1, t_2, \ldots, t_{k-1}\right]}{t_k-t_1} \\
+f\left[t_k\right] &= y_k \\
+k &= 1,\ldots,n.
+\end{align*}
+This is done more efficiently using the table of divided differences:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}
+		$f[1]=11$ &  &  &  \\ 
+		$f[2]=29$ & $f[1,2]=\frac{29-11}{2-1}=18$ & &  \\ 
+		$f[3]=65$ & $f[2,3]=\frac{65-29}{3-2}=36$ & $f[1,2,3] = \frac{36-18}{3-1}=9$ &  \\ 
+		$f[4]=125$ & $f[3,4]=\frac{125-65}{4-3}=60 $ &  $f[2,3,4] = \frac{60-36}{4-2}=12$ &  $f[1,2,3,4] = \frac{12-9}{4-1}=1$ \\
+	\end{tabular}
+\end{table}
+
+The Newton polynomial is given by
+\begin{align*}
+p(t) &= f[t_1] + f[t_1,t_2](t-t_1) + f[t_1,t_2,t_3](t-t_1)(t-t_2) + f[t_1,t_2,t_3,t_4](t-t_1)(t-t_1)(t-t_2)(t-t_3)\\
+p(t) &= f[1] + f[1,2](t-1) + f[1,2,3](t-1)(t-2) + f[1,2,3,4](t-1)(t-2)(t-3)\\
+p(t) &= 11 + 18t - 18 + 9t^2 -27t + 18 + t^3 - 6t^2 + 11t - 6\\
+\end{align*}
+\begin{equation}\label{polyinter4}
+\boxed{
+	p(t) = 5 + 2t + 3t^2 + t^3
+}
+\end{equation}
+In conclusion, monomial, Lagrange and Newton polynomial bases produce the same interpolant given the same set of data points.
+
+\subsection{Problem 7.12}
+\subsubsection*{$(a)$ Verify directly that the first six Legendre polynomials $p_i(t)$ are indeed mutually orthogonal.}
+\textbf{Solution.} 
+The Legendre polynomials are orthogonal over the interval $[-1,1]$ with weight function $w(t)\equiv 1$. The first six Legendre polynomials are
+\begin{align*}
+p_0(t) &= 1\\
+p_1(t) &= t\\
+p_2(t) &= \frac{3t^2-1}{2}\\
+p_3(t) &= \frac{5t^3-3t}{2}\\
+p_4(t) &= \frac{35t^4-30t^2+3}{8}\\
+p_5(t) &= \frac{63t^5-70t^2+15t}{8}\\
+\end{align*}
+Orthogonality implies that the inner product of any two Legendre polynomials,
+\begin{equation*}
+\langle p_i,p_j \rangle=\int_{-1}^{1}p_i(t)p_j(t)\;\mathrm{d}t =
+\begin{cases}
+1, i = j \\
+0, i \neq j
+\end{cases}
+\end{equation*}
+\begin{align*}
+\langle p_0, p_0 \rangle &= \int_{-1}^{1} \mathrm{d}t = t \Big|_{-1}^{1}\\ &= 1-(-1) = \boxed{2} \\
+\langle p_0, p_1 \rangle &= \int_{-1}^{1} t\:\mathrm{d}t = \frac{t^2}{2} \Big|_{-1}^{1}\\ &= \frac{1}{2}-\frac{(-1)^2}{2} = \boxed{0} \\
+\langle p_0, p_2 \rangle &= \int_{-1}^{1} \left(\frac{3}{2}t^2-\frac{1}{2}\right)\:\mathrm{d}t = \frac{1}{2}t^3-\frac{t}{2} \Big|_{-1}^1\\ &= \left[\frac{1}{2}(1)^3-\frac{1}{2}\right] - \left[\frac{1}{2}(-1)^3-\frac{(-1)}{2}\right] = \boxed{0} \\
+\langle p_0, p_3 \rangle &= \int_{-1}^{1}\left(\frac{5}{2}t^3-\frac{3}{2}\right)\:\mathrm{d}t = \frac{5}{8}t^4-\frac{3}{4}t^2 \Big|_{-1}^1\\ &= \left[\frac{5}{8}(1)^4-\frac{3}{4}(1)^2\right] -  \left[\frac{5}{8}(-1)^4-\frac{3}{4}(-1)^2\right] = \boxed{0} \\
+\langle p_0,p_4 \rangle &= \int_{-1}^{1}\left(\frac{35}{8}t^4-\frac{30}{8}t^2+\frac{3}{8}\right)\:\mathrm{d}t = \frac{7}{8}t^5-\frac{10}{8}t^3+\frac{3}{8}t \Big|_{-1}^{1}\\ &= \left[\frac{7}{8}(1)^5-\frac{10}{8}(1)^3+\frac{3}{8}(1)\right] - \left[\frac{7}{8}(-1)^5-\frac{10}{8}(-1)^3+\frac{3}{8}(-1)\right] = \boxed{0}\\
+\end{align*}
+\begin{align*}
+\langle p_0,p_4 \rangle &= \int_{-1}^{1}\left(\frac{35}{8}t^4-\frac{30}{8}t^2+\frac{3}{8}\right)\:\mathrm{d}t = \frac{7}{8}t^5-\frac{10}{8}t^3+\frac{3}{8}t \Big|_{-1}^{1}\\ &= \left[\frac{7}{8}(1)^5-\frac{10}{8}(1)^3+\frac{3}{8}(1)\right] - \left[\frac{7}{8}(-1)^5-\frac{10}{8}(-1)^3+\frac{3}{8}(-1)\right] = \boxed{0}\\
+\langle p_0,p_5 \rangle &= \int_{-1}^{1} \left(\frac{63}{8}t^5-\frac{70}{8}t^3+\frac{15}{8}t\right)\:\mathrm{d}t = \frac{63}{48}x^6-\frac{70}{32}x^4+\frac{15}{16}x^2 \Big|_{-1}^{1} \\ &= \left[\frac{63}{48}(-1)^6-\frac{70}{32}(-1)^4+\frac{15}{16}(-1)^2\right] - \left[\frac{63}{48}(1)^6-\frac{70}{32}(1)^4+\frac{15}{16}(1)^2\right] = \boxed{0}\\
+\end{align*}
+\begin{align*}
+\langle p_1, p_1 \rangle &= \int_{-1}^{1} t^2 \mathrm{d}t = \frac{t^3}{3} \Big|_{-1}^{1} \\ &= \frac{1^3}{3}-\frac{(-1)^3}{3} = \boxed{\frac{2}{3}}\\
+\langle p_1, p_2 \rangle &= \int_{-1}^{1} t\left(\frac{3}{2}t^3-\frac{1}{2}t^2\right)\:\mathrm{d}t = \frac{3}{8}t^4 - \frac{1}{6}t^3 \Big|_{-1}^{1} \\ &= \left[\frac{3}{8}(1)^4 - \frac{1}{6}(1)^3\right] - \left[\frac{3}{8}(-1)^4 - \frac{1}{6}(-1)^3\right] = \boxed{0} \\
+\langle p_1, p_3 \rangle &= \int_{-1}^{1} t\left(\frac{5}{2}t^3-\frac{3}{2}t\right) \mathrm{d}t = \frac{1}{2}t^5-\frac{1}{2}t^3 \Big|_{-1}^{1} \\ &= \left[
+\frac{1}{2}(1)^5-\frac{1}{2}(1)^3\right] - \left[\frac{1}{2}(-1)^5-\frac{1}{2}(-1)^3\right] = \boxed{0}\\
+\langle p_1, p_4 \rangle &= \int_{-1}^{1}t\left(\frac{35}{8}t^4-\frac{30}{8}t^2+\frac{3}{8}\right)\:\mathrm{d}t = \frac{35}{48}t^6-\frac{30}{24}t^4 + \frac{3}{16}t^2 \Big|_{-1}^{1}\\ &= \left[\frac{35}{48}(1)^6-\frac{30}{24}(1)^4 + \frac{3}{16}(1)^2\right] - \left[\frac{35}{48}(-1)^6-\frac{30}{24}(-1)^4 + \frac{3}{16}(-1)^2\right] = \boxed{0}\\
+\langle p_1, p_5 \rangle &= \int_{-1}^{1}t\left(\frac{35}{8}t^4-\frac{30}{8}t^2-\frac{3}{8}\right)\:\mathrm{d}t = \frac{35}{48}t^6-\frac{30}{24}t^4+\frac{3}{16}t^2\Big|_{-1}^{1}\\ &= \left[\frac{35}{48}(1)^6-\frac{30}{24}(1)^4+\frac{3}{16}(1)^2\right] - \left[\frac{35}{48}(-1)^6-\frac{30}{24}(-1)^4+\frac{3}{16}(-1)^2\right] = \boxed{0}
+\end{align*}
+\begin{align*}
+\langle p_2,p_2 \rangle &= \int_{-1}^{-1}\left(\frac{3t^2-1}{2}\right)^2\:\mathrm{d}t = \int_{-1}^{1} \left(\frac{9t^4-6t^2+1}{4}\right)\:\mathrm{d}t
+= \frac{9}{20}t^5-\frac{2}{4}t^3+\frac{1}{4}t\Big|_{-1}^{1} \\ &= \left[\frac{9}{20}(1)^5-\frac{1}{2}(1)^3+\frac{1}{4}(1)\right] - \left[\frac{9}{20}(-1)^5-\frac{1}{2}(-1)^3+\frac{1}{4}(1)\right] = \boxed{\frac{2}{5}} \\
+\langle p_2,p_3 \rangle &= \int_{-1}^{1}\left(\frac{3t^2-1}{2}\right)\left(\frac{5t^3-3t}{2}\right)\:\mathrm{d}t = \frac{1}{4}\int_{-1}^{1}\left(15t^5-9t^3-5t^3+3t\right) = \frac{1}{4}\left\lbrace\frac{15}{6}t^6-\frac{14}{4}t^4+\frac{3}{2}t^2\right\rbrace_{-1}^{1}\\ &= \frac{1}{4}\left\lbrace\left[\frac{15}{6}(1)^6-\frac{14}{4}(1)^4+\frac{3}{2}(1)^2\right] - \left[\frac{15}{6}-(1)^6-\frac{14}{4}(-1)^4+\frac{3}{2}(-1)^2\right]\right\rbrace = \boxed{0}
+\end{align*}
+\begin{align*}
+\langle p_2,p_4 \rangle &= \int_{-1}^{1}\left(\frac{3t^2-1}{2}\right)\left(\frac{35t^4-30t^2+3}{8}\right)\:\mathrm{d}t\\ &= \frac{1}{16} \int_{-1}^{1} \left(189t^7-210t^5+45t^3-63t^5+70t^3-15t\right)\:\mathrm{d}t\\ &= \frac{1}{16}\left\lbrace\frac{189}{8}t^8-\frac{273}{6}t^6+\frac{115}{4}t^4-\frac{15}{2}t^2\right\rbrace_{-1}^{1} \\
+&= \frac{1}{16}\left\lbrace\left[\frac{189}{8}(1)^8-\frac{273}{6}(1)^6+\frac{115}{4}(1)^4-\frac{15}{2}(1)^2\right]\right\rbrace\\ &-\frac{1}{16}\left\lbrace\left[\frac{189}{8}(-1)^8-\frac{273}{6}(-1)^6+\frac{115}{4}(-1)^4-\frac{15}{2}(-1)^2\right]\right\rbrace = \boxed{0}
+\end{align*}
+\begin{align*}
+\langle p_3, p_3 \rangle &= \int_{-1}^{1} \left(\frac{5t^3-3t}{2}\right)^2\:\mathrm{d}t= \int_{-1}^{1}\left(\frac{25t^6-30t^4+9t^2}{4}\right)\:\mathrm{d}t = \frac{25}{28}t^7-\frac{6}{4}t^5+\frac{3}{4}t^3\Big|_{-1}^{1}\\
+&= \left[\frac{25}{28}(1)^7-\frac{6}{4}(1)^5+\frac{3}{4}(1)^3\right] - \left[\frac{25}{28}(-1)^7-\frac{6}{4}(-1)^5+\frac{3}{4}(-1)^3\right] = \boxed{\frac{2}{7}} \\
+\langle p_3, p_4 \rangle &= \int_{-1}^{1} \left(\frac{5t^3-3t}{2}\right)\left(\frac{35t^4-30t^2+3}{8}\right)\:\mathrm{d}t\\
+&= \frac{1}{16}\int_{-1}^{1}\left(175t^7-150t^5+15t^3-75t^5+90t^3-9t\right)\:\mathrm{d}t \\
+&= \frac{1}{16}\left\lbrace\frac{175}{8}t^8-\frac{225}{6}t^6+\frac{105}{4}t^4-\frac{9}{2}t^2\right\rbrace_{-1}^{1} \\
+&= \frac{1}{16}\left\lbrace\left[\frac{175}{8}(1)^8-\frac{225}{6}(1)^6+\frac{105}{4}(1)^4-\frac{9}{2}(1)^2\right]\right\rbrace \\ &- \left\lbrace\left[\frac{175}{8}(-1)^8-\frac{225}{6}(-1)^6+\frac{105}{4}(-1)^4-\frac{9}{2}(-1)^2\right]\right\rbrace = \boxed{0} \\
+\langle p_3, p_5 \rangle &= \int_{-1}^{1} \left(\frac{5t^3-3t}{2}\right)\left(\frac{63t^5-70t^3+15t}{8}\right)\:\mathrm{d}t\\
+&= \frac{1}{16}\int_{-1}^{1}\left(315t^8-350t^6+75t^4-189t^6+210t^4-45t^2\right)\:\mathrm{d}t\\
+&=\frac{1}{16}\left\lbrace 35t^9-77t^7+57t^5-15t^3 \right\rbrace_{-1}^{1} \\
+&=\frac{1}{16}\left\lbrace\left[35(1)^9-77(1)^7+57(1)^5-15(1)^3\right]\right\rbrace \\ &- \frac{1}{16}\left\lbrace\left[35(-1)^9-77(-1)^7+57(-1)^5-15(-1)^3\right]\right\rbrace = \boxed{0}
+\end{align*}
+\begin{align*}
+\langle p_4,p_4 \rangle &= \int_{-1}^{1} \left(\frac{35t^4-30t^2-3}{8}\right)^2\:\mathrm{d}t = \frac{1}{64}\int_{-1}^{1}\left(1225t^8-2100t^6+1110t^4-180t^2+9\right)\:\mathrm{d}t \\
+&= \frac{1}{64}\left\lbrace\frac{1225}{9}t^9 -300t^7 + 222t^5 - 60t^3+9t\right\rbrace_{-1}^{1} \\
+&= \frac{1}{64}\left\lbrace\left[\frac{1225}{9}(1)^9 -300(1)^7 + 222(1)^5 - 60(1)^3+9(1)\right]\right\rbrace \\
+&- \frac{1}{64}\left\lbrace\left[\frac{1225}{9}(-1)^9 -300(-1)^7 + 222(-1)^5 - 60(-1)^3+9(-1)\right]\right\rbrace = \boxed{\frac{2}{9}} \\
+\langle p_4,p_5 \rangle &= \int_{-1}^{1} \left(\frac{35t^4-30t^2-3}{8}\right)\left(\frac{63t^5-70t^3+15t}{8}\right)\:\mathrm{d}t\\ &= \frac{1}{64}\int_{-1}^{1} \left(2205 t^9-4340 t^7+2436 t^5-240 t^3-45 t\right) \mathrm{d}t \\
+&= \left\lbrace \frac{441}{2}t^{10}-\frac{1085}{2}t^8+406 t^6-60 t^4-\frac{45}{2}t^2 \right\rbrace_{-1}^{1} \\
+&= \left\lbrace\left[ \frac{441}{2}(1)^{10}-\frac{1085}{2}(1)^8+406 (1)^6-60(1)^4-\frac{45}{2}(1)^2 \right]\right\rbrace \\ &= \left\lbrace\left[ \frac{441}{2}(1)^{10}-\frac{1085}{2}(-1)^8+406 (-1)^6-60(-1)^4-\frac{45}{2}(-1)^2 \right]\right\rbrace = \boxed{0}
+\end{align*}
+\begin{align*}
+\langle p_5, p_5 \rangle &= \int_{-1}^{1} \left(\frac{63t^5-70t^3+15t}{8}\right)^2\mathrm{d}t \\ &= \frac{1}{64}\int_{-1}^{1}\left(3969t^{10}+4900t^6+225t^2-8820t^8-2100t^4+1890t^6\right)\mathrm{d}t \\
+&= \frac{1}{64}\left\lbrace\frac{3969}{11}t^{11}+430t^7+75t^3-980t^9-420t^5\right\rbrace_{-1}^{1} \\
+&=\left\lbrace\frac{3969}{11}(1)^{11}+430(1)^7+75(1)^3-980(1)^9-420(1)^5\right\rbrace\\ &- \left\lbrace\frac{3969}{11}(-1)^{11}+430(-1)^7+75(-1)^3-980(-1)^9-420(-1)^5\right\rbrace = \boxed{\frac{2}{11}}
+\end{align*}
+
+In general, the Legendre polynomials obey the orthogonality relationship
+\begin{equation}
+\int_{-1}^{1}p_n(t)p_m(t)\:\mathrm{d}t=\frac{2}{2n+1}\delta_{mn}, \:\:\:\:\: \delta_{mn}=
+\begin{cases}
+1, m=n\\
+0, m\neq n
+\end{cases}
+\end{equation}
+where $\delta_{mn}$ is the Kronecker delta function.
+\\
+\\
+$(b)$ \textbf{Verify directly that they satisfy the three-term recurrence relation}
+\begin{equation}
+\left(k+1\right) p_{k+1}(t) = \left(2k+1\right)t\:p_k(t) - k\:p_{k-1}(t)
+\end{equation}
+\\
+\textbf{Solution.} Let's start with initial values $k=0$ and $p_0(t)=1$ to obtain $p_1(t)$.
+\begin{align*}
+\left(0+1\right)p_1(t) &= (2\cdot0+1)t\:p_0(t)-0p_{-1}(t)\\
+\Aboxed{p_1(t)&=t}
+\end{align*}
+Next, obtain $p_2(t)$ at $k=1$:
+\begin{align*}
+\left(1+1\right)p_2(t) &= \left(2\cdot 1+1\right)t\:p_1(t)- p_0(t)\\
+2\:p_2(t) &= 3t^2-1\\
+\Aboxed{p_2(t) &= \frac{3t^2-1}{2}}
+\end{align*}
+Next, obtain $p_3(t)$ at $k=2$:
+\begin{align*}
+\left(2+1\right)p_3(t) &= \left(2\cdot2+1\right)t\:p_2(t)-2\:p_1(t)\\
+3\:p_3(t) &= 5t\left(\frac{3t^2-1}{2}\right)-2t = \frac{15t^3}{2}-\frac{9t}{2}\\
+\Aboxed{p_3(t) &= \frac{5t^3-3t}{2}}
+\end{align*}
+Next, obtain $p_4(t)$ using $k=3$:
+\begin{align*}
+\left(3+1\right)p_4(t) &= \left(2\cdot 3+1\right)t\:p_3(t)-3\:p_2(t)\\
+4\:p_4(t) &= 7t\left(\frac{5t^3-3t}{2}\right)-3\left(\frac{3t^2-1}{2}\right)\\
+4\:p_4(t) &= \frac{35t^4-30t^2+3}{2} \\
+\Aboxed{p_4(t) &= \frac{35t^4-30t^2+3}{3}}
+\end{align*}
+Lastly, get $p_5(t)$ using $k=4$:
+\begin{align*}
+\left(4+1\right)p_5(t) &= \left(2\cdot 4+1\right)p_4(t)-4\:p_3(t)\\
+5\:p_5(t) &= 9t\left(\frac{5t^3-3t}{2}\right)-4\left(\frac{5t^3-3t}{2}\right)\\
+5\:p_5(t) &= \frac{315t^5-270t^3-27t}{8}-10t^3+6t\\
+5\:p_5(t) &= \frac{315t^5-350t^3+75t}{8}\\
+\Aboxed{p_5(t) &= \frac{63t^5-70t^3+15t}{8}}
+\end{align*}
+
+\subsubsection*{$(c)$ Express each of the first six monomials ${m_k}$ as a linear combination of the first six Legendre polynomials ${p_k}$.}
+\textbf{Solution.} We must solve constants $c_i$ such that
+\begin{equation}\label{defm}
+m_k = \sum_{i=0}^{5}c_ip_i\:\:\:\forall k=0,\ldots,5.
+\end{equation}
+This approach is analogous to interpolating monomials using Legendre polynomials as basis functions.
+\\
+\\
+First, we interpolate $m_0$. We have a trivial solution
+\begin{align*}
+m_0 &= 1 = p_0\\
+\Aboxed{m_0 &= p_0}
+\end{align*}
+\\
+\\
+Next, we interpolate $m_1$. We also have a trivial solution
+\begin{align*}
+m_1 &= t = 0p_0+1\:p_1\\
+\Aboxed{m_1 &= p_1}
+\end{align*}
+\\
+\\
+Next, interpolate $m_2$. We now have an equation
+\begin{align*}
+m_2 = t^2 &= c_0p_0 + c_1p_1 + c_2p_2\\
+&= c_0 + c_1t + c^2 \left(\frac{3t^2-1}{2}\right)\\
+&= c_0 + c_1t + \frac{3}{2}c_2t^2 - \frac{c_2}{2}
+\end{align*}
+which yields a system of equations
+\begin{align*}
+c_0-\frac{c_2}{2} &= 0\\
+c_1 &= 0\\
+\frac{3}{2}c_2 &= 1
+\end{align*}
+with solutions
+\begin{equation*}
+c_0 = \frac{1}{3}, c_1 = 0, c_2 = \frac{2}{3}
+\end{equation*}
+Therefore, we have the relationship
+\begin{equation*}
+\boxed{m_2 = \frac{1}{3}p_0 + \frac{2}{3}p_2}
+\end{equation*}
+\\
+\\
+Next, interpolate $m_3$. We now have an equation
+\begin{align*}
+m_3 = t^3 &= c_0p_0 + c_1p_1 + c_2p_2 + c_3p_3\\
+&= c_0 + c_1t + c_2 \left(\frac{3t^2-1}{2}\right) + c_3 \left(\frac{5t^3-3t}{2}\right)\\
+&= c_0 + c_1t + \frac{3}{2}c_2t^2 - \frac{c_2}{2} + \frac{5}{2}c_3t^3 - \frac{3}{2}c_3t
+\end{align*}
+which yields a system of equations
+\begin{align*}
+c_0-\frac{c_2}{2} &= 0\\
+c_1-\frac{3}{2}c_3 &= 0\\
+\frac{3}{2}c_2 &= 0\\
+\frac{5}{2}c_3 &= 1
+\end{align*}
+with solutions
+\begin{equation*}
+c_0 = 0, c_1 = \frac{3}{5}, c_2 = 0, c_3 = \frac{2}{5}
+\end{equation*}
+Therefore, we have the relationship
+\begin{equation*}
+\boxed{m_3 = \frac{3}{5}p_1 + \frac{2}{5}p_3}
+\end{equation*}
+\\
+\\
+Next, interpolate $m_4$. We now have an equation
+\begin{align*}
+m_4 = t^4 &= c_0p_0 + c_1p_1 + c_2p_2 + c_3p_3 + c_4p_4\\
+&= c_0 + c_1t + c_2 \left(\frac{3t^2-1}{2}\right) + c_3 \left(\frac{5t^3-3t}{2}\right) + c_4 \left(\frac{35t^4-30t^2+3}{8}\right)\\
+&= c_0 + c_1t + \frac{3}{2}c_2t^2 - \frac{c_2}{2} + \frac{5}{2}c_3t^3 - \frac{3}{2}c_3t + \frac{35}{8}c_4t^4 - \frac{30}{8}c_4t^2 + \frac{3}{8}c_4
+\end{align*}
+which yields a system of equations
+\begin{align*}
+c_0-\frac{c_2}{2} + \frac{3}{8}c_4 &= 0\\
+c_1-\frac{3}{2}c_3 &= 0\\
+\frac{3}{2}c_2 - \frac{30}{8}c_4 &= 0\\
+\frac{5}{2}c_3 &= 0\\
+\frac{35}{8}c_4 &= 1
+\end{align*}
+with solutions
+\begin{equation*}
+c_0 = \frac{1}{5}, c_1 = 0, c_2 = \frac{4}{7}, c_3 = 0, c_4 = \frac{8}{35}
+\end{equation*}
+Therefore, we have the relationship
+\begin{equation*}
+\boxed{m_4 = \frac{1}{5}p_0 + \frac{4}{7}p_2 + \frac{8}{35}p_4}
+\end{equation*}
+Lastly, interpolate $m_5$. We now have an equation
+\begin{align*}
+t^5 &= c_0p_0 + c_1p_1 + c_2p_2 + c_3p_3 + c_4p_4 + c_5p_5\\
+&= c_0 + c_1t + c_2 \left(\frac{3t^2-1}{2}\right) + c_3 \left(\frac{5t^3-3t}{2}\right) + c_4 \left(\frac{35t^4-30t^2+3}{8}\right) + c_5 \left(\frac{63t^5-70t^3+15t}{8}\right)\\
+&= c_0 + c_1t + \frac{3}{2}c_2t^2 - \frac{c_2}{2} + \frac{5}{2}c_3t^3 - \frac{3}{2}c_3t + \frac{35}{8}c_4t^4 - \frac{30}{8}c_4t^2 + \frac{3}{8}c_4 + \frac{63}{8}c_5t^5 - \frac{70}{8}c_5t^3 + \frac{15}{8}c_5t
+\end{align*}
+which yields a system of equations
+\begin{align*}
+c_0-\frac{c_2}{2} + \frac{3}{8}c_4 &= 0\\
+c_1-\frac{3}{2}c_3 + \frac{15}{8}c_5 &= 0\\
+\frac{3}{2}c_2 - \frac{30}{8}c_4 &= 0\\
+\frac{5}{2}c_3 - \frac{70}{8}c_5 &= 0\\
+\frac{35}{8}c_4 &= 0\\
+\frac{63}{8}c_5 &= 1
+\end{align*}
+with solutions
+\begin{equation*}
+c_0 = 0, c_1 = \frac{27}{63}, c_2 = 0, c_3 = \frac{4}{9}, c_4 = 0, c_5 = \frac{8}{63}
+\end{equation*}
+Therefore, we have the relationship
+\begin{equation*}
+\boxed{m_5 = \frac{27}{63}p_1 + \frac{4}{9}p_3 + \frac{8}{63}p_5}
+\end{equation*}
+\\
+\\
+\textbf{Further Notes.} In general, interpolating a polynomial from a monomial basis using Legendre polynomials as basis functions, it is required to solve the system
+
+\begin{equation*}
+\begin{bmatrix}
+\Delta_{00} & \Delta_{01} & \cdots & \Delta_{0n}\\
+\Delta_{10} & \Delta_{11} & \cdots & \Delta_{1n}\\
+\vdots & \vdots & \ddots & \vdots\\
+\Delta_{n0} & \Delta_{n1} & \cdots & \Delta_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+c_0\\
+c_1\\
+\vdots\\
+c_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+x_0\\
+x_1\\
+\vdots\\
+x_n
+\end{bmatrix}
+\end{equation*}
+Where $\Delta_{ij}$ is the coefficient of the term with $i$th degree in the $j$th Legendre polynomial, $c_i$'s are the constants we want to solve and $x_i$ is the coefficient of the term with $i$th degree in the polynomial of monomial basis that we want to interpolate.
+
+Further note that $\Delta_{ij} = 0$ for $i>j$ since there are no terms with $i$th degree in the $j$th Legendre polynomial. For example, there is no term with degree 3 in $p_2(t)$, hence $\Delta_{32} = 0$. With this simplification, the resulting system will now have a upper triangular matrix.
+
+\begin{align*}
+\begin{bmatrix}
+\Delta_{00} & \Delta_{01} & \cdots & \Delta_{0n}\\
+0 & \Delta_{11} & \cdots & \Delta_{1n}\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & \Delta_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+c_0\\
+c_1\\
+\vdots\\
+c_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+x_0\\
+x_1\\
+\vdots\\
+x_n
+\end{bmatrix}\\
+\mathbf{\Delta c} &= \mathbf{x}
+\end{align*}
+Lastly, if the vector $\mathbf{x}$ is the natural basis vector $\begin{bmatrix}0 & 0 & \cdots & 1\end{bmatrix}$ it can be shown that
+\begin{equation}\label{sumc}
+\sum_{i=0}^{n}c_i = 1
+\end{equation}
+Proof: We know that $m_k(1) = p_k(t) = 1, k=0,\ldots$. Using equation (\ref{defm}) and $t=1, n=5$, we have
+\begin{equation*}
+1 = \sum_{i=0}^{5} c_ip_i = \boxed{\sum_{i=0}^{5} c_i}
+\end{equation*}
+Let us have an example. Interpolating $m_5(t) = t^5$ using Legendre polynomials, we have
+\begin{equation*}
+\begin{bmatrix}
+1 & 0 & \frac{-1}{2} & 0 & \frac{3}{8} & 0\\
+0 & 1 & 0 & \frac{-3}{2} & 0 & \frac{15}{8}\\
+0 & 0 & \frac{3}{2} & 0 & \frac{-30}{8} & 0\\
+0 & 0 & 0 & \frac{5}{2} & 0 & \frac{-70}{8}\\
+0 & 0 & 0 & 0 & \frac{35}{8} & 0\\
+0 & 0 & 0 & 0 & 0 & \frac{63}{8}\\
+\end{bmatrix}
+\begin{bmatrix}
+c_0\\c_1\\c_2\\c_3\\c_4\\c_5
+\end{bmatrix} = 
+\begin{bmatrix}
+0\\0\\0\\0\\0\\1
+\end{bmatrix}
+\end{equation*}
+Solving for $c_i$'s can be executed using backward substitution. This is already done earlier.
+\begin{align*}
+\mathbf{c} = 
+\begin{bmatrix}
+0 & \frac{27}{63} & 0 & \frac{4}{9} & 0 & \frac{8}{63}
+\end{bmatrix}, \:\:\:\sum_{i=0}^{n}c_i = \frac{27}{63} + \frac{4}{9} + \frac{8}{63} = 1
+\end{align*}
+Thus, proving the claim in equation (\ref{sumc}). \qedsymbol

@@ -1,0 +1,698 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{graphicx, float, url, hyperref, lscape, afterpage, amsthm, amsmath, mathtools}
+\usepackage[margin=1.0in]{geometry}
+
+\begin{document}
+	\title{\textbf{CS 236 Problem Set 2}}
+	\author{Francis Dimzon\\Joshua Frankie Rayo\\Isabelle Tingzon}
+	\maketitle
+	
+	\paragraph{10.1a}
+	%Reference: http://math.oregonstate.edu/home/programs/undergrad/CalculusQuestStudyGuides/ode/first/di/di.html
+	Given 
+	\begin{equation*}
+	u ''(t) = f(t) 
+	\end{equation*}
+	we apply the Fundamental Theorem of Calculus to get,
+	\begin{equation*}
+	\int_0^t u ''(t) = u'(t) = c_{1} + \int_0^t f(t)dt 
+	\end{equation*}
+	where $c_1$ is determined by the initial condition. We can rewrite this as a definite integral
+	\begin{equation*}
+	\begin{split}
+	u'(t) &= c_{1} + \int_0^t f(x)dx \\
+	&= c_{1} + F(t)
+	\end{split}
+	\end{equation*}
+	where $F(t) = \int_0^t f(x)dx$. Integrating one more time using the Fundamental Theorem of Calculus,
+	\begin{equation*}'
+	\begin{split}
+	\int_0^t u '(t) = u(t) &= \int_0^t \Big( c_{1} + F(t) \Big)dt \\
+	u(t) &= c_{2} + c_{1}t + \int_0^t F(s) ds 
+	\end{split}
+	\end{equation*}
+	where $F(s) = \int_0^s f(x)dx$ 
+	
+	\paragraph{10.1b}
+	
+	Show $u(t)=c_{1}+c_{2}t+\int_{0}^{t}(t-s)f(s)ds$
+	
+	From a), $u(t)=c_{1}+c_{2}t+\int_{0}^{t}F(s)ds$
+	
+	It suffice to show that $\int_{0}^{t}F(s)ds=\int_{0}^{t}(t-s)f(s)ds$
+	
+	Using integration by parts, $\int udv=uv-\int vdu$
+	
+	Let u=F(s) and du=dF(s), then dv = ds and v =s.
+	
+	$\int_{0}^{t}F(s)ds=sF(s)|_{0}^{t}-\int_{0}^{t}sdF(s)=tF(t)-0F(0)-\int_{0}^{t}sdF(s)=tF(t)-\int_{0}^{t}sf(s)ds=\int_{0}^{t}tf(s)ds-\int_{0}^{t}sf(s)ds=\int_{0}^{t}(t-s)f(s)ds.$
+	
+	
+	\paragraph{10.1c}
+	
+	Given: $u(0)=0$
+	
+	$\implies0=u(0)=c_{1}+(c_{2})(0)+\int_{0}^{0}F(s)ds$
+	
+	$\implies0=c_{1}$
+	
+	Given: $u(1)=0$
+	
+	$\implies0=u(1)=c_{1}+(c_{2})(1)+\int_{0}^{1}F(s)ds$
+	
+	$\implies0=0+c_{2}+\int_{0}^{1}F(s)ds$
+	
+	$\implies0=c_{2}+\int_{0}^{1}(1-s)f(s)ds$
+	
+	$\implies0=c_{2}+\int_{0}^{1}f(s)ds-\int_{0}^{1}sf(s)ds$
+	
+	$\implies c_{2}=\int_{0}^{1}sf(s)ds-\int_{0}^{1}f(s)ds$
+	
+	$\implies c_{2}=\int_{0}^{1}(s-1)f(s)ds$
+	
+	Hence, $u(t)=t\int_{0}^{1}(s-1)f(s)ds+\int_{0}^{t}(t-s)f(s)ds$
+	
+	
+	\paragraph{10.1d}
+	
+	$u(t)=t\int_{0}^{1}(s-1)f(s)ds+\int_{0}^{t}(t-s)f(s)ds$
+	
+	$=t\left(\int_{0}^{t}(s-1)f(s)ds+\int_{t}^{1}(s-1)f(s)ds\right)+\int_{0}^{t}(t-s)f(s)ds$
+	
+	$=\int_{0}^{t}t(s-1)f(s)ds+\int_{t}^{1}t(s-1)f(s)ds+\int_{0}^{t}(t-s)f(s)ds$
+	
+	$=\int_{0}^{t}tsf(s)ds-\int_{0}^{t}tf(s)ds+\int_{0}^{t}tf(s)ds-\int_{0}^{t}sf(s)ds+\int_{t}^{1}t(s-1)f(s)ds$
+	
+	$=\int_{0}^{t}tsf(s)ds-\int_{0}^{t}sf(s)ds+\int_{t}^{1}t(s-1)f(s)ds$
+	
+	$=\int_{0}^{t}s(t-1)f(s)ds+\int_{t}^{1}t(s-1)f(s)ds$
+	
+	$=\int_{0}^{1}G(t,s)f(s)ds.$
+	
+	
+	\paragraph{10.1e }
+	
+	$u(t)=\int_{0}^{1}G(t,s)f(s)ds$
+	
+	at $f(t)=1$
+	
+	$u(t)=\int_{0}^{1}G(t,s)(1)ds=\int_{0}^{t}s(t-1)ds+\int_{t}^{1}t(s-1)ds=\frac{(t-1)t^{2}}{2}+t\left(-\frac{t^{2}-2t}{2}-\frac{1}{2}\right)=\frac{t^{2}-t}{2}.$
+	
+	
+	\paragraph{10.1f}
+	
+	$u(t)=\int_{0}^{1}G(t,s)f(s)ds$
+	
+	at $f(t)=t$
+	
+	$u(t)=\int_{0}^{1}G(t,s)sds=\int_{0}^{t}s^{2}(t-1)ds+\int_{t}^{1}ts(s-1)ds=\frac{t^{3}-t}{6}.$
+	
+	
+	\paragraph{10.1g}
+	
+	$u(t)=\int_{0}^{1}G(t,s)f(s)ds$
+	
+	at $f(t)=t^{2}$
+	
+	$u(t)=\int_{0}^{1}G(t,s)s^{2}ds=\int_{0}^{t}s^{3}(t-1)ds+\int_{t}^{1}ts^{2}(s-1)ds=\frac{t^{4}-t}{12}.$
+	
+	
+	\paragraph{10.2a}
+	
+	$y_{1}=u,\quad y_{2}=u'$
+	
+	$\mathbf{y}'=\left[\begin{array}{c}
+	y_{1}^{,}\\
+	y_{2}^{,}
+	\end{array}\right]=\left[\begin{array}{c}
+	y_{2}\\
+	y_{1}
+	\end{array}\right]=\left[\begin{array}{cc}
+	0 & 1\\
+	1 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	y_{1}\\
+	y_{2}
+	\end{array}\right]=\mathbf{Ay}$
+	
+	boundary conditions:
+	
+	$\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	y_{1}(0)\\
+	y_{2}(0)
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 0\\
+	1 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	y_{1}(b)\\
+	y_{2}(b)
+	\end{array}\right]=\left[\begin{array}{c}
+	\alpha\\
+	\beta
+	\end{array}\right]$
+	
+	
+	\paragraph{10.2b}
+	If we have an ODE in the form $\mathbf{y' = Ay}$, the general solution is given by $y = c_1e^{\lambda_1 t}\mathbf{v_1} + c_2e^{\lambda_2 t}\mathbf{v_2}$ where $\lambda$ are the eigenvalues and $\mathbf{v}$ are the corresponding eigenvectors. So the general solution of the ODE is
+	
+	$$\mathbf{y}(t) = c_1e^{-t} \left[\begin{array}{c}
+	-1\\
+	1
+	\end{array}\right] + c_2e^{t} \left[\begin{array}{c}
+	1\\
+	1
+	\end{array}\right]$$
+	
+	From chapter 10.2, $\mathbf{Y}(t) = \left[y_1(t)\quad y_2(t)\right]$ where $y_1(t)$ is the specific solution given that $y(0) = [1\quad 0]^T$ and $y_2(t)$ is the specific solution given that $y(0) = [0\quad 1]^T$. Solving for $y_1(t)$ we have
+	
+	\begin{align*}
+	1 &= -c_1+c_2\\
+	0 &= c_1+c_2\\
+	y_1(t) &= -\frac{1}{2}e^{-t} \left[\begin{array}{c}
+	-1\\
+	1
+	\end{array}\right] + \frac{1}{2}e^{t} \left[\begin{array}{c}
+	1\\
+	1
+	\end{array}\right] = \left[\begin{array}{c}
+	\cosh(t)\\
+	\sinh(t)
+	\end{array}\right]
+	\end{align*}
+	
+	Solving for $y_2(t)$ we have
+	
+	\begin{align*}
+	0 &= -c_1+c_2\\
+	1 &= c_1+c_2\\
+	y_1(t) &= \frac{1}{2}e^{-t} \left[\begin{array}{c}
+	-1\\
+	1
+	\end{array}\right] + \frac{1}{2}e^{t} \left[\begin{array}{c}
+	1\\
+	1
+	\end{array}\right] = \left[\begin{array}{c}
+	\sinh(t)\\
+	\cosh(t)
+	\end{array}\right]
+	\end{align*}
+	
+	Hence, $\mathbf{Y}(t)=\left[\begin{array}{cc}
+	\cosh(t) & \sinh(t)\\
+	\sinh(t) & \cosh(t)
+	\end{array}\right]$
+	
+	\paragraph{10.2c}
+	
+	Solutions to the ODE are not stable since $||\mathbf{Y}(t)||_{\infty}$ increases with
+	$t$ exponentially.
+	
+	
+	\paragraph{10.2d}
+	
+	$\mathbf{Q}=\mathbf{B}_{0}\mathbf{Y}(0)+\mathbf{B}_{b}\mathbf{Y}(b)=\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 1
+	\end{array}\right]+
+	\left[\begin{array}{cc}
+	\cosh(b) & \sinh(b)\\
+	\sinh(b) & \cosh(b)
+	\end{array}\right]=\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 1
+	\end{array}\right]+\left[\begin{array}{cc}
+	\cosh(b) & \sinh(b)\\
+	\sinh(b) & \cosh(b)
+	\end{array}\right]$
+	
+	$=\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{cc}
+	\cosh(0) & \sinh(0)\\
+	\sinh(0) & \cosh(0)
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 0\\
+	1 & 0
+	\end{array}\right]\left[\begin{array}{cc}
+	\cosh(b) & \sinh(b)\\
+	\sinh(b) & \cosh(b)
+	\end{array}\right]$
+	
+	$=\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 1
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 0\\
+	1 & 0
+	\end{array}\right]\left[\begin{array}{cc}
+	\cosh(b) & \sinh(b)\\
+	\sinh(b) & \cosh(b)
+	\end{array}\right]$
+	
+	$=\left[\begin{array}{cc}
+	1 & 0\\
+	0 & 0
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 0\\
+	\cosh(b) & \sinh(b)
+	\end{array}\right]$
+	
+	$=\left[\begin{array}{cc}
+	1 & 0\\
+	\cosh(b) & \sinh(b)
+	\end{array}\right]$.
+	
+	
+	\paragraph{10.2e}
+	
+	$\mathbf{\mathbf{\Phi}}(t)=\mathbf{Y}(t)\mathbf{Q}^{-1}$
+	
+	$=\left[\begin{array}{cc}
+	\cosh(t) & \sinh(t)\\
+	\sinh(t) & \cosh(t)
+	\end{array}\right]\left[\begin{array}{cc}
+	1 & 0\\
+	\cosh(b) & \sinh(b)
+	\end{array}\right]^{-1}$
+	
+	$=\left[\begin{array}{cc}
+	\cosh(t) & \sinh(t)\\
+	\sinh(t) & \cosh(t)
+	\end{array}\right]\left[\begin{array}{cc}
+	1 & 0\\
+	-\frac{\cosh(b)}{\sinh(b)} & \frac{1}{\sinh(b)}
+	\end{array}\right]$
+	
+	$=\left[\begin{array}{cc}
+	\frac{\sinh(b)\cosh(t)-\cosh(b)\sinh(t)}{\sinh(b)} & \frac{\sinh(t)}{\sinh(b)}\\
+	\frac{\sinh(b)\sinh(t)-\cosh(b)\cosh(t)}{\sinh(b)} & \frac{\cosh(t)}{\sinh(b)}
+	\end{array}\right]$
+	
+	$=$$\frac{1}{\sinh(b)}\left[\begin{array}{cc}
+	\sinh(b-t) & \sinh(t)\\
+	-\cosh(b-t) & \cosh(t)
+	\end{array}\right]$
+	
+	
+	\paragraph{10.2f}
+	We will focus in the $\infty$-norm which is the maximum absolute row sum as $b$ goes to infinity.
+	
+	\begin{align*}
+	||\mathbf{Q}||_{\infty} &= \max\left( 1, \cosh(b) + \sinh(b) \right)\\
+	||\mathbf{Q}^{-1}||_{\infty} &= \max\left( 1, \coth(b) + \text{csch}(b) \right)\\
+	||\mathbf{\Phi}||_{\infty} &= \frac{1}{e^t}
+	\end{align*}
+	
+	As $b$ increases to infinity, the first norm also increases without bound while the second norm goes to 1. So, $\text{cond}(\mathbf{Q})$ increases without bound as $b$ increases. The unique solution to the BVP is given by
+	
+	\begin{align*}
+	\mathbf{y}(t) &= \mathbf{\Phi}(t) \cdot [0 \quad \beta]^T\\
+	||\mathbf{y}(t)||_{\infty} &= ||\mathbf{\Phi}(t)||_{\infty} \cdot \beta\\
+	||\mathbf{y}(t)||_{\infty} &= \frac{\beta}{e^t}
+	\end{align*}
+	
+	The solution is bounded by the function given above, which does not blow up when $t \in [0, \infty]$.
+	
+	\paragraph{10.3a}
+	
+	Using Euler's method from t=a to t=b
+	
+	$u(b)=u(a)+(h)(slope_{initial})$
+	
+	$\implies\beta=\alpha+(b-a)slope_{initial}$
+	
+	
+	\paragraph{10.3b}
+	
+	$slope_{initial}=\frac{\beta-\alpha}{b-a}$
+	
+	
+	\paragraph{10.4a}
+	
+	$y_{1}=u,\quad y_{2}=u'$
+	
+	$\mathbf{y}'=\left[\begin{array}{c}
+	y_{1}^{,}\\
+	y_{2}^{,}
+	\end{array}\right]=\left[\begin{array}{c}
+	y_{2}\\
+	-4
+	\end{array}\right]=\left[\begin{array}{cc}
+	0 & 1\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	y_{1}\\
+	y_{2}
+	\end{array}\right]+\left[\begin{array}{c}
+	0\\
+	-4
+	\end{array}\right]=\mathbf{Ay+b}$
+	
+	1)Trapeziod Method $y_{k+1}=y_{k}+h(y_{k}^{,}+y_{k+1}^{,})/2$
+	
+	$\left[\begin{array}{c}
+	1\\
+	s_{1}
+	\end{array}\right]=\left[\begin{array}{c}
+	1\\
+	s_{0}
+	\end{array}\right]+\frac{1}{2}\left(\left[\begin{array}{cc}
+	0 & 1\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	1\\
+	s_{0}
+	\end{array}\right]+\left[\begin{array}{c}
+	0\\
+	-4
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 1\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	1\\
+	s_{1}
+	\end{array}\right]+\left[\begin{array}{c}
+	0\\
+	-4
+	\end{array}\right]\right)$
+	
+	2. From 1), $s_{0}+s_{1}=0$ and $s_{1}=s_{0}-4$
+	
+	$\implies s_{0}=2$ and $s_{1}=-2$.
+	
+	3. $\left[\begin{array}{c}
+	y_{1}(0.5)\\
+	y_{2}(0.5)
+	\end{array}\right]=\left[\begin{array}{c}
+	1\\
+	2
+	\end{array}\right]+\frac{0.5}{2}\left(\left[\begin{array}{cc}
+	0 & 1\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	1\\
+	2
+	\end{array}\right]+\left[\begin{array}{c}
+	0\\
+	-4
+	\end{array}\right]+\left[\begin{array}{cc}
+	0 & 1\\
+	0 & 0
+	\end{array}\right]\left[\begin{array}{c}
+	y_{1}(0.5)\\
+	y_{2}(0.5)
+	\end{array}\right]+\left[\begin{array}{c}
+	0\\
+	-4
+	\end{array}\right]\right)$
+	
+	$\implies y_{1}(0.5)=1.5,\quad y_{2}(0.5)=0$
+	
+	$\implies u(0.5)\approx1.5$
+	
+	
+	\paragraph{10.4b}
+	
+	$u''=-4$
+	
+	$\implies\frac{y_{0}-2y_{1}+y_{2}}{h^{2}}=-4$
+	
+	$\implies\frac{1-2y_{1}+1}{0.5^{2}}=-4$
+	
+	$\implies y_{1}=1.5$
+	
+	$\implies u(0.5)=1.5$
+	
+	
+	\paragraph{10.4c}
+	
+	$u(t)\approx x_{0}+x_{1}t+x_{2}t^{2}$
+	
+	$u(0)=1=x_{0}+(x_{1})(0)+(x_{2})(0^{2})$
+	
+	$\implies x_{0}=1$
+	
+	$u(1)=1=x_{0}+(x_{1})(1)+(x_{2})(1^{2})$
+	
+	$\implies x_{1}=-x_{2}$
+	
+	$u''(t)=2x_{2}=-4$
+	
+	$\implies x_{2}=-2$
+	
+	$\implies x_{1}=2$
+	
+	$u(t)\approx1+2t-2t^{2}$
+	
+	$u(0.5)\approx1+2(0.5)-2(0.5)^{2}=1.5$
+	
+	
+	\paragraph{11.1a}
+	
+	$\int_{a}^{b}g(t)dt$
+	
+	Let $y(t)=\int_{a}^{t}g(x)dx$. Solving $\int_{a}^{b}g(t)dt$ is equivalent
+	to finding the value of y(b).
+	
+	1. Solving the problem becomes solving the ODE subproblem $y'(t)=g(t)$.
+	
+	2. The initial condition is that $y(a)=0$.
+	
+	3. No special properties unless $g(t)$ is known.
+	
+	
+	\paragraph{11.1b}
+	
+	$y''(t)=y^{2}+t,\quad0\le t\le1\quad y(0)=0,\quad y(1)=1$
+	
+	Converting to first order ODE system, we have
+	
+	$u_{1}=y,\quad u_{2}=y'$
+	
+	$\mathbf{u}'=\left[\begin{array}{c}
+	u_{1}^{,}\\
+	u_{2}^{,}
+	\end{array}\right]=\left[\begin{array}{c}
+	u_{2}\\
+	u_{1}^{2}+t
+	\end{array}\right]$
+	
+	1. This is solvable by the ODE solver. The BVP can be solved using
+	shooting method.
+	
+	2. $u_{1}(0)=0$. $u_{2}(0)$ is obtained by several guesses until
+	$u_{1}(1)=1$.
+	
+	3. No special properties
+	
+	
+	\paragraph{11.1c}
+	$u_{t}=cu_{xx},\quad0\le x\le1,\quad t\ge0$
+	
+	$u(0,x)=g(x),\quad0\le x\le1$
+	
+	$u(t,0)=0,\quad u(t,1)=0,\quad t\ge0$
+	
+	\begin{enumerate}
+		\item \begin{equation*}
+		y_{i}'(t) = \frac{c}{(\Delta x)^2} (y_{i+1} - 2y_{i} + y_{i-1})
+		\end{equation*}
+		which can be solved using method of lines
+		\item Initial conditions: $y_{i}(0)=g(x_{i}),\quad i=1,\ldots,n$
+		\item The ODE problem is stiff and the solver must deal with stiff problems
+	\end{enumerate}
+	
+	
+	\paragraph{11.2}
+	
+	Substituting the centered finite difference approximations in the
+	PDE,
+	
+	$\frac{u_{x+\Delta x,y}-2u_{x,y}+u_{x-\Delta x,y}}{(\Delta x)^{2}}+\frac{u_{x,y+\Delta y}-2u_{x,y}+u_{x,y-\Delta y}}{(\Delta y)^{2}}\approx x+y$.
+	
+	$\implies\frac{1-2u_{x,y}+0}{(0.5)^{2}}+\frac{1-2u_{x,y}+0}{(0.5)^{2}}\approx0.5+0.5$
+	
+	$\implies u_{x,y}\approx0.4375$
+	
+	
+	\paragraph{11.4}
+	
+	Consider the Laplace equation $\nabla^2 u = 0$ with $u=0$ at the boundary to be solve using fully discrete methods, using $k=5$ interior mesh points for each dimension.
+	
+	For the 1-dimensional case, we have $u_{xx} = 0$. Using centered finite difference of second derivatives, the resulting matrix will be tridiagonal:
+	
+	\begin{equation*}
+	\mathbf{A} = 
+	\begin{bmatrix}
+	-2    & 1     & 0     & \cdots& 0 \\
+	1     & -2    & 1     & \ddots& \vdots \\
+	0     & \ddots     & \ddots    & \ddots     & 0 \\
+	\vdots& \ddots     & 1     & -2    & 1 \\
+	0     & \cdots     & 0     & 1     & -2
+	\end{bmatrix}
+	\end{equation*}
+	
+	Numerical values of nonzero entries include 1, -2 and 1.
+	
+	For the 2-dimensional case, we have $u_{xx} + u_{yy} = 0$. The resulting matrix will be also tridiagonal:
+	\begin{figure}[H]
+		B = 
+		\includegraphics[width=0.9\textwidth]{Capture}
+	\end{figure}
+	
+	Notice that we can define $B$ as
+	
+	\begin{equation*}
+	\mathbf{B} =
+	\begin{bmatrix}
+	2A & I_k & 0 & \cdots & 0\\
+	I & 2A & I_k & \ddots & \vdots\\
+	0 & \ddots & \ddots & \ddots & 0\\
+	\vdots & \ddots & I_k & 2A & I\\
+	0 & \cdots & 0 & I_k & 2A
+	\end{bmatrix}
+	\end{equation*}
+	
+	Where $I_k$ is the identity matrix with size $k \times k$. Numerical values of nonzero entries include 1, -4 and 1.
+	
+	For the 3-dimensional case, the resulting matrix will be similar with the pattern above
+	
+	\begin{equation*}
+	\mathbf{C} =
+	\begin{bmatrix}
+	3/2\:B & I_{k^2} & 0 & \cdots & 0\\
+	I_{k^2} & 3/2\:B & I_{k^2} & \ddots & \vdots\\
+	0 & \ddots & \ddots & \ddots & 0\\
+	\vdots & \ddots & I_{k^2} & 3/2\:B & I_{k^2}\\
+	0 & \cdots & 0 & I_{k^2} & 3/2\:B
+	\end{bmatrix}
+	\end{equation*}
+	
+	Numerical values of nonzero entries include 1, -6 and 1.
+	
+	In general, solving the Poisson equation $\nabla^2 x=0$ in $n$ dimensions using the centered finite difference method using $k$ internal mesh points in each dimension results in the following coefficient matrix that can be defined recursively as tridiagonal nested matrices:
+	
+	\begin{align*}
+	X_1 &= 
+	\begin{bmatrix}
+	-2    & 1     & 0     & \cdots& 0 \\
+	1     & -2    & 1     & \ddots& \vdots \\
+	0     & \ddots     & \ddots    & \ddots     & 0 \\
+	\vdots& \ddots     & 1     & -2    & 1 \\
+	0     & \cdots     & 0     & 1     & -2
+	\end{bmatrix}\\
+	X_n &=
+	\begin{bmatrix}
+	n/(n-1)\:X_{n-1} & I_{k^{(n-1)}} & 0 & \cdots & 0\\
+	I_{k^{(n-1)}} & n/(n-1)\:X_{n-1} & I_{k^{(n-1)}} & \ddots & \vdots\\
+	0 & \ddots & \ddots & \ddots & 0\\
+	\vdots & \ddots & I_{k^{(n-1)}} & n/(n-1)\:X_{n-1} & I_{k^{(n-1)}}\\
+	0 & \cdots & 0 & I_{k^{(n-1)}} & n/(n-1)\:X_{n-1}
+	\end{bmatrix}
+	\end{align*}
+	
+	Numerical values of nonzero entries include 1, -2n, and 1.
+	
+	%Source: http://math.stackexchange.com/questions/1053751/3d-finite-difference-matrix
+	
+	\paragraph{11.6}
+	Prove that the Jacobi iterative method for solving the linear system $Ax=b$ converges if the matrix $A$ is diagonally dominant by rows. \\ \\
+	\textbf{Proof.} 
+	By definition, A is diagonally dominant if $|a_{ii}| > \sum_{j \neq i} |a_{ij}|$. In other words, we can define r
+	\begin{equation*}
+	r = \sum_{j \neq i} \frac{|a_{ij}|}{|a_{ii}|} < 1
+	\end{equation*}
+	
+	%Reference: http://www.math.tamu.edu/~pasciak/classes/639/l2.pdf
+	A linear iteration method converges for any starting iterate and
+	any right hand side provided that matrix norm $|| G || < 1$.
+	Recall that Jacobi iteration scheme is given by
+	\begin{equation*}
+	x^{k+1} = -D^{-1}(L+U)x^{(k)} + D^{-1}b
+	\end{equation*}
+	where $A = D + L + U$. 
+	
+	Therefore, for convergence we need $|| G || = ||-D^{-1}(L+U)x^{(k)}|| < 1$. 
+	The $\infty$-norm of a matrix $M$ is given by 
+	\begin{equation*}
+	||M||_{\infty} = \max_{1\leq i\leq n} \sum_{j=1}^{n} |m_{ij}|
+	\end{equation*}
+	
+	If A is diagonally dominant by rows, then the following must be true
+	\begin{equation*}
+	||-D^{-1}(L+U)x^{(k)}||_{\infty} = \max \sum_{j \neq i} \frac{|a_{ij}|}{|a_{ii}|} \leq r < 1
+	\end{equation*}
+	Therefore, the Jacobi iterative method for solving the linear systems converges if matrix $A$ is diagonally dominant by rows.
+	
+	\paragraph{11.7}
+	
+	\def\defeq{\mathrel{\mathop:}=}
+	
+	Let \emph{B} be any $n\times n$ complex matrix with
+	zero diagonal entries which we write in the form \emph{B}=\emph{L}+\emph{U},
+	where \emph{L} and \emph{U} are, respectively, strictly lower and
+	strictly upper triangular matrices. If 
+	\[
+	L_{\omega}\defeq(I-\omega L)^{-1}(\omega U+(1-\omega)I),
+	\]
+	
+	
+	then for any real or complex number $\omega$,
+	
+	\[
+	\rho(L_{\omega})\ge|\omega-1|,
+	\]
+	
+	
+	with equality holding only if all eigenvalues of $L_{\omega}$ are
+	of modulus $|\omega-1|$.
+	
+	\textbf{Proof.} Let $\phi(\lambda)\defeq\det(\lambda I-L_{\omega})$ be
+	the characteristic polynomial of $L_{\omega}$. Since L is strictly
+	lower triangular, then $(I-\omega L)$ is nonsingular, and as $\det(I-\omega L)=1$,
+	then
+	
+	\[
+	\phi(\lambda)=\det(I-\omega L)\cdot\det(\lambda I-L_{\omega})=\det\{(\lambda+\omega-1)I-\omega\lambda L-\omega U\}.
+	\]
+	
+	
+	The constant term term $\mu$ of $\phi(\lambda)$, the product of
+	the negatives of the eigenvalues of $L_{\omega}$, is obtained by
+	setting $\lambda=0$ in this expression. Thus,
+	
+	\[
+	\mu=\prod_{i=1}^{n}(-\lambda_{i}(\omega))=\det\{(\omega-1)I-\omega U\}=(\omega-1)^{n}.
+	\]
+	
+	
+	Therefore,
+	
+	\[
+	\rho(L_{\omega})=\max_{1\le i\le n}|\lambda_{i}(\omega)|\ge|\omega-1|,
+	\]
+	
+	
+	with equality possible only if all eigenvalues of $L_{\omega}$ are
+	modulus $|\omega-1|$, which completes the proof. If we wish to determine
+	the \emph{real} value of $\omega$ which minimizes $\rho(L_{\omega})$,
+	then the above result of Kahan shows that we need only consider the
+	open interval $0<\omega<2$ for values of $\omega$ such that $L_{\omega}$
+	is convergent.
+	
+	%Reference: Varga, R.S.Matrix iterative analysis. In: Series in Automatie Computation(Englewood Chffs, N.J.) Prentice Hall (1962)
+	
+	\paragraph{11.8}
+	
+\end{document}
+
