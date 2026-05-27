@@ -108,22 +108,11 @@ Advanced topics in numerical computation focusing on algorithm implementation an
 
 ## Software Stack
 
-**Primary Tools**
-- **MATLAB** (2015-2016 version): Core numerical computing platform with vector/matrix operations, visualization, and built-in numerical libraries
-- **LaTeX**: Professional academic report formatting with mathematical typesetting, cross-referencing, and bibliography management
-
-**Version Control and Visualization**
-- **Git**: Full development history and commit tracking for reproducibility
-- **Mathematica/Wolfram Language**: Auxiliary visualization and analysis
-- **PNG/FIG graphics**: Publication-ready visualizations
+MATLAB, LaTeX, Git, Mathematica.
 
 ---
 
 ## Usage
-
-**Prerequisites**
-- MATLAB (R2015b or later)
-- LaTeX distribution (for viewing/compiling reports)
 
 **Running the Exercises**
 
