@@ -1,23 +1,21 @@
 # CS236: Scientific Computing
 
-Scientific computing coursework from the **Master of Science in Computer Science** program at the **University of the Philippines Diliman** (2015-2016). This repository demonstrates practical implementations of fundamental numerical methods and their applications in atmospheric science and physics.
+Scientific computing coursework from the **Master of Science in Computer Science** program at the **University of the Philippines Diliman** (2015-2016). It covers the theory and practical implementation of numerical methods, including approximation theory, numerical integration, and solutions to differential equations with emphasis on accuracy, stability, and computational efficiency.
 
 ## Repository Overview
 
-This repository contains rigorous implementations of numerical computing techniques applied to real-world scientific problems. The work demonstrates expertise in:
+This contains implementations of numerical computing techniques applied to real-world problems:
 
 - **Numerical Methods**: Interpolation, numerical integration, and differential equation solving
 - **Computational Algorithms**: Implementation of classical and modern numerical techniques
 - **Scientific Problem-Solving**: Application of mathematics to atmospheric science and physics
 - **Research Software Development**: Production of well-documented scientific code
 
-**CS 236: Scientific Computing** is an advanced graduate course that covers the theory and practical implementation of numerical methods, including approximation theory, numerical integration, and solutions to differential equations with emphasis on accuracy, stability, and computational efficiency.
-
 ---
 
 ## Learning Outcomes
 
-Completion of CS 236 demonstrates competency in:
+Demonstrate competency in:
 
 1. **Mathematical Problem-Solving**: Translate physical phenomena into mathematical equations
 2. **Algorithm Development**: Implement numerical methods from theoretical foundations
@@ -63,7 +61,7 @@ Completion of CS 236 demonstrates competency in:
 
 #### MP1: Typhoon Track Interpolation
 Compared five interpolation methods on Typhoon Haiyan data, evaluated accuracy using condition numbers and Runge phenomenon, and determined the optimal method for meteorological applications.
-- **Problem**: Reconstruct the complete trajectory of Typhoon Haiyan from sparse observational data (6-hour intervals)
+- **Problem**: Reconstruct the trajectory of a typhoon from sparse observational data
 - **Application**: Meteorological forecasting and storm surge modeling
 - **Methods**: Linear, Lagrange polynomial, cubic spline, Hermite, and orthogonal polynomial interpolation
 - **Key Concepts**: Vector-valued functions, condition numbers, numerical stability, error estimation, Runge's phenomenon
